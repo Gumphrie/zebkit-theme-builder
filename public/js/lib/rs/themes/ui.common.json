@@ -1,0 +1,68 @@
+{
+    "version"   : "10.2017",
+
+    "doubleClickDelta" : 280,
+
+    "focusManager"   : { "@ ? zebkit.ui.event.FocusManager"  :[] },
+
+    "shortcuts" : {
+        "@ ? zebkit.ui.event.ShortcutManager" :{
+            "common": {
+                "UNDO"          : "Control + KeyZ",
+                "REDO"          : [
+                                    "Control + Shift   + KeyZ",
+                                    "Shift   + Control + KeyZ"
+                                  ],
+                "SELECTALL"     : "Control + KeyA",
+                "NEXTWORD"      : "Control + ArrowRight",
+                "PREVWORD"      : "Control + ArrowLeft",
+                "NEXTWORDSELECT": [
+                                    "Control + Shift   + ArrowRight",
+                                    "Shift   + Control + ArrowRight"
+                                  ],
+                "PREVWORDSELECT": [
+                                    "Control + Shift   + ArrowLeft",
+                                    "Shift   + Control + ArrowLeft"
+                                  ],
+                "PREVPAGE"      : "Control + ArrowUp",
+                "NEXTPAGE"      : "Control + ArrowDown",
+                "PREVPAGESELECT": [
+                                    "Control + ArrowUp + Shift",
+                                    "ArrowUp + Control + Shift"
+                                  ],
+                "NEXTPAGESELECT": [
+                                    "ArrowDown + Control   + Shift",
+                                    "Control   + ArrowDown + Shift"
+                                  ]
+            },
+            "osx" : {
+                "UNDO"          : "MetaLeft + KeyZ",
+                "REDO"          : [
+                                    "MetaLeft + Shift + KeyZ",
+                                    "Shift + MetaLeft + KeyZ"
+                                  ],
+                "SELECTALL"     : "MetaLeft + KeyA",
+
+                "NEXTWORD"      : "MetaLeft + ArrowRight",
+
+                "PREVWORD"      : "MetaLeft + ArrowLeft",
+                "NEXTWORDSELECT": [
+                                    "MetaLeft + Shift    + ArrowRight",
+                                    "Shift    + MetaLeft + ArrowRight"
+                                  ],
+                "PREVWORDSELECT": [
+                                    "MetaLeft + Shift    + ArrowLeft",
+                                    "Shift    + MetaLeft + ArrowLeft"
+                                  ]
+            }
+         }
+    },
+
+    "popup" : {
+        "@ ? zebkit.ui.TooltipManager": []
+    },
+
+    "mscroll": {
+        "@ ? zebkit.ui.MobileScrollMan":[]
+    }
+}

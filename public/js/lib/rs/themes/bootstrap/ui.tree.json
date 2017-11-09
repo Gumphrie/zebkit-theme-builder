@@ -1,0 +1,48 @@
+{
+    "DefViews": {
+        "color" : "#333333",
+        "font"  : "12px 'Helvetica Neue',Helvetica,Arial,sans-serif"
+    },
+
+    "BaseTree" : {
+        "lineColor" : "rgba(51, 51, 51,0.6)",
+        "views": {
+            "collapsedSign"   : { "@zebkit.draw.Picture": [ "%{zebkit.ui.pictures.closed_folder}" ] },
+            "expandedSign"    : { "@zebkit.draw.Picture": [ "%{zebkit.ui.pictures.open_folder}" ] },
+            "leafSign"        : { "@zebkit.draw.Picture": [ "%{zebkit.ui.pictures.halflings}", 336, 48, 14, 14, true ] },
+
+            "collapsedToggle"     : { "@zebkit.draw.ToggleView": [ true, "white", "lightGray", 12, 12, {"@zebkit.draw.Border": ["rgba(126, 239, 104, 0.6)", 1, 3] } ] },
+            "expandedToggle"      : { "@zebkit.draw.ToggleView": [ false, "white", "lightGray", 12, 12, {"@zebkit.draw.Border": ["rgba(126, 239, 104, 0.6)", 1, 3] } ] },
+
+            "focusOnSelect" : [ [ "rgba(184,194,177,0.6)", { "@zebkit.draw.Border": "rgba(51,51,51,0.6)" } ] ]
+        },
+        "viewSizes" : {
+            "expandedToggle"  : { "width": 12, "height" : 12 },
+            "collapsedToggle" : { "width": 12, "height" : 12 },
+            "expandedSign"    : { "width": 16, "height" : 16 },
+            "collapsedSign"   : { "width": 16, "height" : 16 },
+            "leafSign"        : { "width": 16, "height" : 16 }
+        }
+    },
+
+    "Tree": {
+        "inheritProperties" : true
+    },
+
+    "CompTree": {
+        "Checkbox" : {
+            "inheritProperties" : true
+        },
+
+        "Combo" : {
+            "inheritProperties" : true
+        },
+
+        "Label" : {
+            "inheritProperties" : true,
+            "padding"  : 4
+        },
+
+        "inheritProperties" : true
+    }
+}

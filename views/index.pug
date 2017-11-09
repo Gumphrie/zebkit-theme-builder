@@ -1,0 +1,166 @@
+extends layout
+
+block content
+    script(type='text/javascript').
+
+        zebkit.ui.config("theme", "#{theme}")
+        zebkit.draw.configWithRs("themes/#{theme}/draw.json")
+
+        zebkit.require(
+            function () {
+
+                eval(zebkit.import("ui", "layout"));
+
+                var ZebkitTextRender = zebkit.Class(zebkit.draw.TextRender, [
+                    function (t, reflection) {
+                        if (arguments.length === 1) {
+                            reflection = false;
+                        }
+
+                        this.$super(t);
+                        this.setFont(new zebkit.Font("100px Futura, Helvetica, sans-serif"));
+                        this.image = zebkit.ui.demo.zebra_pattern;
+                        this.hasReflection = reflection;
+                        this.reflectionGap = -40;
+                    },
+
+                    function getLineHeight() {
+                        return this.hasReflection ? this.font.height * 2 + this.reflectionGap : this.font.height;
+                    },
+
+                    function paintLine2(g, x, y, line, d) {
+                        var gradient = g.createLinearGradient(x, y, x, y + this.font.height);
+                        gradient.addColorStop(0.1, '#000');
+                        gradient.addColorStop(0.35, '#fff');
+                        gradient.addColorStop(0.65, '#fff');
+                        gradient.addColorStop(1.0, '#000');
+                        g.fillStyle = gradient;
+                        g.fillText(this.getLine(line), x, y);
+
+                        var prev = g.globalCompositeOperation;
+                        if (this.hasReflection) {
+                            // draw reflected text
+                            g.save();
+                            g.globalCompositeOperation = "source-over";
+                            g.scale(1, -1);
+                            g.font = this.font.s;
+                            g.fillStyle = "#fff";
+                            g.fillText(this.getLine(line), x, -y - this.font.height - 2 * this.font.height - this.reflectionGap);
+                            g.scale(1, -1);
+
+                            // cut the gradient out of the reflected text
+                            var gradient = g.createLinearGradient(x, y + this.font.height + this.reflectionGap, x, y + 2 * d.height + this.reflectionGap);
+                            gradient.addColorStop(0.0, 'rgba(0,0,0,0.65)');
+                            gradient.addColorStop(1.0, '#000');
+                            g.fillStyle = gradient;
+                            g.fillRect(x, y + this.font.height + this.reflectionGap + 30, this.calcLineWidth(line), 2 * this.font.height);
+                            g.restore();
+                        }
+
+                        //	g.globalCompositeOperation = "source-atop";
+                        g.fillStyle = this.pattern;
+                        g.fillRect(x, y, this.calcLineWidth(line), this.getLineHeight());
+                        g.globalCompositeOperation = prev;
+                    },
+
+                    function paint(g, x, y, w, h, d) {
+                        this.pattern = g.createPattern(this.image, 'repeat');
+                        this.$super(g, x, y, w, h, d);
+                    }
+                ]);
+
+
+                desktop = new zCanvas(900, 750);
+
+                var root = desktop.root, nt = new Tabs(), prevSelected = -1;
+
+                root.properties({
+                    padding: 4,
+                    border: new zebkit.draw.Border(),
+                    layout: new BorderLayout(),
+                    kids: {
+                        center: nt.properties({
+                            kids: {
+                                "About": new Panel({
+                                    padding: 8,
+                                    layout: new BorderLayout(),
+                                    kids: {
+                                        center: new Panel({
+                                            padding: 8,
+                                            layout: new BorderLayout(),
+                                            background: "gray",
+                                            border: new zebkit.draw.Border("white", 4, 8),
+                                            kids: {
+                                                center: new Panel({
+                                                    background: "black",
+                                                    layout: new BorderLayout(8, 16),
+                                                    padding: 8,
+                                                    border: new zebkit.draw.RoundBorder("lightGray", 4),
+                                                    kids: {
+                                                        top: new Panel({
+                                                            layout: new FlowLayout("center", "center", "vertical", 0),
+                                                            kids: [new Label(new ZebkitTextRender("Zebkit", true)).properties({
+                                                                font: new zebkit.Font("Helvetica", 'bold', 100)
+                                                            })]
+                                                        }),
+                                                        center: new Panel({
+                                                            layout: new FlowLayout("center", "top", "horizontal", 12),
+                                                            kids: [new Label(new zebkit.data.Text()).properties({
+                                                                id: "descField"
+                                                            })]
+                                                        }),
+                                                        bottom: new Panel({
+                                                            layout: new FlowLayout("center", "top", "horizontal", 12),
+                                                            kids: [new Label("Copyright (c) Andrei Vishneuski, 2015")]
+                                                        })
+                                                    }
+                                                })
+                                            }
+                                        })
+                                    }
+                                }),
+                                "Basic UI": new zebkit.ui.demo.BasicUIDemo(),
+                                "Panels": new zebkit.ui.demo.PanelsDemo(),
+                                "Tree": new zebkit.ui.demo.TreeDemo(),
+                                "Menu": new zebkit.ui.demo.PopupDemo(),
+                                "Tooltip & Win": new zebkit.ui.demo.WinDemo(),
+                                "Layouts": new zebkit.ui.demo.LayoutDemo(),
+                                "Grid": new zebkit.ui.demo.GridDemo(),
+                                "Designer": new zebkit.ui.demo.DesignerDemo(),
+                                "Zebkit text": new Panel({
+                                    layout: new BorderLayout(8, 8),
+                                    padding: 8,
+                                    background: "gray",
+                                    kids: {
+                                        center: new TextField(new ZebkitTextRender("Zebkit ...")).properties({
+                                            cursorView: "red",
+                                            cursorWidth: 3,
+                                            selectView: "gray",
+                                            background: "black"
+                                        }),
+                                        top: new Label("Type using Zebkit font in text editor :)").properties({
+                                            font: "22px Futura, Helvetica, sans-serif",
+                                            color: "white",
+                                            padding: 8,
+                                            border: new zebkit.draw.Border("white", 4, 8)
+                                        })
+                                    }
+                                })
+                            }
+                        })
+                    }
+                });
+
+                nt.on(function (src, data) {
+                    if (prevSelected >= 0) src.kids[prevSelected].activated && src.kids[prevSelected].activated(false);
+                    src.kids[data].activated && src.kids[data].activated(true);
+                    prevSelected = data;
+                });
+
+
+                root.byPath("#descField").setModel(new zebkit.data.Text(zebkit.ui.demo.desctxt));
+                root.byPath("#descField").setColor("white");
+                root.byPath("#descField").setFont(new zebkit.Font("Verdana", 14));
+            }
+        );
+

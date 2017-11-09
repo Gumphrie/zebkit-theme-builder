@@ -1,0 +1,19 @@
+doctype html
+html
+    head
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(http-equiv='Content-Type' content='text/html; charset=utf-8')
+
+        title= title
+        meta(name='viewport', content="user-scalable=no,width=device-width,initial-scale=1,maximum-scale=1")
+        mata(name="msapplication-tap-highlight" content="no")
+        link(rel="shortcut icon" href="http://wallace-and-gromit-2015.s3.amazonaws.com/favicon.png" type="image/png")
+        link(rel='stylesheet', href='/css/style.css')
+        if (env==='dev')
+            script(type='text/javascript', src="/js/lib/zebkit.js")
+        else
+            script(type='text/javascript', src="/js/lib/zebkit.min.js")
+        script(type='text/javascript', src='/js/uidemo/uidemo.js')
+
+    body(style="background:black")
+        block content
