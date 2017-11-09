@@ -1,0 +1,28 @@
+# Don't track third party code
+##############################
+node_modules
+tmp
+zebkit
+
+# Don't worry about the bundled js files
+##############################
+public/js/lib/zebkit.js
+public/js/lib/zebkit.min.js
+
+
+# Don't track project files
+##############################
+.idea
+.vscode/
+
+
+# Don't track OS files
+##############################
+.directory
+*.tmp
+*.DS_Store
+
+# Don't track process output
+##############################
+nohup.out
+
