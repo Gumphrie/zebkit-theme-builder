@@ -20,7 +20,7 @@
         "Checkbox": {
             "inheritProperties" : true,
             "layout": { "@zebkit.layout.FlowLayout": [ "center", "center" ]},
-            "border": { "@zebkit.draw.Border":  "rgba(126, 239, 104, 0.6)" }
+            "border": { "@zebkit.draw.Border":  "%{zebkit.ui.palette.highlightColor}" }
         }
     },
 
@@ -34,8 +34,8 @@
         "StatusPan": {
             "view" : {
                 "*"       : { "@zebkit.draw.ArrowView" : [ "left", "black" ], "width" : 9, "height" : 9  },
-                "ascent"  : { "@zebkit.draw.ArrowView" : [ "top", "#6FAA42"  ]   },
-                "descent" : { "@zebkit.draw.ArrowView" : [ "bottom", "#6FAA42" ] }
+                "ascent"  : { "@zebkit.draw.ArrowView" : [ "top", "%{zebkit.ui.palette.mainColor}"  ]   },
+                "descent" : { "@zebkit.draw.ArrowView" : [ "bottom", "%{zebkit.ui.palette.mainColor}" ] }
             }
         },
 
@@ -46,7 +46,7 @@
         "Link": {
             "font"  : "bold",
             "colors"      : {
-                "pressed.over" : "#B8C2B1",
+                "pressed.over" : "%{zebkit.ui.palette.overColor}",
                 "out"          : "black",
                 "over"         : "#48732b",
                 "pressed.out"  : "#48732b",
@@ -79,8 +79,8 @@
         },
 
         "views" : {
-            "focusOnSelect" :"#C3F4C3",
-            "focusOffSelect" :"#8BF07A"
+            "focusOnSelect"  : "%{zebkit.ui.palette.highlightColor}",
+            "focusOffSelect" : "%{zebkit.ui.palette.selectColor}"
         },
 
         "lineColor": "black",
