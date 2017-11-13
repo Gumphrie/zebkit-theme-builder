@@ -75,7 +75,7 @@ zebkit.package("draw", function(pkg, Class) {
 
 
 
-    pkg.ShadowRender = zebkit.Class(pkg.Render, [
+    pkg.ShadowRender = Class(pkg.Render, [
         function (target) {
             this.$super(target);
             this.shadowOffsetX = this.shadowOffsetY = 4;

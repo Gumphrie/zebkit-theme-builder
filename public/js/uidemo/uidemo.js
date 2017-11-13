@@ -366,7 +366,38 @@ zebkit.package("ui.demo", function(pkg, Class) {
             p.add(ctr, this.createProgressPan());
             p.add(ctr, this.createSliderPan());
 
+            var collapsible = new CollapsiblePan.GroupPan(
+                new CollapsiblePan("Page 1", new Panel({
+                    layout: new GridLayout(3, 2, false, true).
+                    setDefaultConstraints(
+                        new Constraints("stretch","center",4)
+                    ),
+                    padding: 8,
+                    kids  : [
+                        new Label("User name: "),
+                        new TextField("", 8),
+                        new Label("Password: "),
+                        new PassTextField(""),
+                        new Label(""),
+                        new ActionButton("Save").$setConstraints(
+                            new Constraints("right","center", 4)
+                        )
+                    ]
+                })),
+                new CollapsiblePan("Page 2",
+                    new Panel({
+                        layout : new FlowLayout("center", "center"),
+                        background : "#202220",
+                        kids   : [
+                            new Label("No content is available")
+                        ]
+                    })),
+                new CollapsiblePan("Page 3",
+                    new Label("..."))
+            ).setPreferredSize(220, 250);
+
             var p_c = new Panel(new BorderLayout(4, 4));
+            p_c.add("right", pkg.createBorderPan("Collapsible Panel", collapsible));
             p_c.add("center", p);
             p_c.add("bottom", this.createButtonPan());
 
@@ -470,6 +501,7 @@ zebkit.package("ui.demo", function(pkg, Class) {
         },
 
         function createButtonPan() {
+            var pp = new Panel(new BorderLayout());
             var p = new Panel(new FlowLayout("center", "center", "horizontal", 8));
             p.add(new Button("Default"));
 
@@ -493,7 +525,9 @@ zebkit.package("ui.demo", function(pkg, Class) {
 
             var bp = pkg.createBorderPan("Buttons", p);
             bp.setPadding(8);
-            return bp;
+            pp.add("center",bp);
+            pp.add("bottom",new LoadingButton("Loading / Wait Button"));
+            return pp;
         },
 
         function createListPan() {

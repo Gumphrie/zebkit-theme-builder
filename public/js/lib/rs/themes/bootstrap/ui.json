@@ -135,6 +135,10 @@
         "padding"         : 6
     },
 
+    "LoadingButton" : {
+        "inheritProperties" : true
+    },
+
     "ReverseButton": {
         "Label": {
             "font": { "@zebkit.Font" : ["Arial", "normal", 15] },
