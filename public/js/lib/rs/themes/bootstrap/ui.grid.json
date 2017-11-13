@@ -8,7 +8,7 @@
     "DefEditors" : {
         "TextField": {
             "inheritProperties" : true,
-            "border": {"@zebkit.draw.Border":  "blue" },
+            "border": {"@zebkit.draw.Border":  "black" },
             "background": null
         },
 
@@ -20,7 +20,7 @@
         "Checkbox": {
             "inheritProperties" : true,
             "layout": { "@zebkit.layout.FlowLayout": [ "center", "center" ]},
-            "border": { "@zebkit.draw.Border":  "blue" }
+            "border": { "@zebkit.draw.Border":  "rgba(126, 239, 104, 0.6)" }
         }
     },
 
@@ -33,9 +33,9 @@
 
         "StatusPan": {
             "view" : {
-                "*"       : { "@zebkit.draw.ArrowView" : [ "left", "rgb(255, 153, 0)" ], "width" : 9, "height" : 9  },
-                "ascent"  : { "@zebkit.draw.ArrowView" : [ "top", "rgb(255, 153, 0)"  ]   },
-                "descent" : { "@zebkit.draw.ArrowView" : [ "bottom", "rgb(255, 153, 0)" ] }
+                "*"       : { "@zebkit.draw.ArrowView" : [ "left", "black" ], "width" : 9, "height" : 9  },
+                "ascent"  : { "@zebkit.draw.ArrowView" : [ "top", "#6FAA42"  ]   },
+                "descent" : { "@zebkit.draw.ArrowView" : [ "bottom", "#6FAA42" ] }
             }
         },
 
@@ -46,10 +46,10 @@
         "Link": {
             "font"  : "bold",
             "colors"      : {
-                "pressed.over" : "orange",
-                "out"          : "red",
-                "over"         : "black",
-                "pressed.out"  : "black",
+                "pressed.over" : "#B8C2B1",
+                "out"          : "black",
+                "over"         : "#48732b",
+                "pressed.out"  : "#48732b",
                 "disabled"     : "gray"
             }
         }
@@ -65,7 +65,7 @@
         "padding"  : 4,
         "font"     : "%{zebkit.ui.boldFont}",
         "fontColor": "rgb(0, 0, 0)",
-        "color"    : "rgb(65, 131, 215)"
+        "color"    : "black"
     },
 
     "LeftGridCaption" :{
@@ -79,11 +79,11 @@
         },
 
         "views" : {
-            "focusOnSelect" :"#D0EAFF",
-            "focusOffSelect" :"#ADC1D6"
+            "focusOnSelect" :"#C3F4C3",
+            "focusOffSelect" :"#8BF07A"
         },
 
-        "lineColor": "rgb(65, 131, 215)",
+        "lineColor": "black",
         "lineSize": 1
     }
 }

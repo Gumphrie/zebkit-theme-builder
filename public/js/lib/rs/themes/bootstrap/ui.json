@@ -253,8 +253,8 @@
             "border"        : "plain",
             "background"    : {
                 "*"        : "white",
-                "over"     : "rgb(65, 131, 255)",
-                "pressed.*": "red"
+                "over"     : "lightGray",
+                "pressed.*": "rgba(126, 239, 104, 0.6)"
             },
             "preferredSize" : [ 6, 6 ]
         }
@@ -272,38 +272,40 @@
     "Scroll" : {
         "HIncButton": {
             "arrowDirection" : "right",
-            "preferredSize":[ 12, 11 ],
-            "canHaveFocus": false
+            "preferredSize"  : [ 12.5, 13 ],
+            "padding"        : 1,
+            "canHaveFocus"   : false
         },
 
         "HDecButton": {
             "arrowDirection" : "left",
-            "preferredSize":[ 12, 11 ],
-            "canHaveFocus": false
+            "preferredSize"  : [ 12.5, 13 ],
+            "padding"        : 1,
+            "canHaveFocus"   : false
         },
 
         "VIncButton": {
             "arrowDirection" : "bottom",
-            "preferredSize"  : [ 11, 12 ],
+            "preferredSize"  : [ 13, 12.5 ],
+            "padding"        : 1,
             "canHaveFocus"   : false
         },
 
         "VDecButton": {
             "arrowDirection" : "top",
-            "preferredSize":[ 11, 12 ],
-            "canHaveFocus": false
+            "preferredSize"  : [ 13, 12.5 ],
+            "padding"        : 1,
+            "canHaveFocus"   : false
         },
 
         "VerticalThumb": {
-            "preferredSize" : [ 8, -1],
-            "border"        :  { "@zebkit.draw.Border" : [ null, 4, 4 ] },
-            "background"    : "gray"
+            "preferredSize" : [ 6, -1],
+            "background"    :  { "@zebkit.draw.RoundCapView": [ "vertical", "#AAAAAA"] }
         },
 
         "HorizontalThumb": {
             "preferredSize" : [ -1, 6 ],
-            "border"        :  { "@zebkit.draw.Border" : [ null, 4, 4 ] },
-            "background"    : "gray"
+            "background"    :  { "@zebkit.draw.RoundCapView": [ "horizontal", "#AAAAAA" ] }
         },
 
         "background": null,
@@ -572,7 +574,7 @@
         "background" : "rgba(255,255,255, 0.6)",
         "padding"    : [ 4,0,4,0 ],
         "views"      : {
-            "marker" : { "@zebkit.draw.Gradient": [ "rgb(228,244,252)", "rgb(167,217,245)"  ] }
+            "marker" : { "@zebkit.draw.Gradient": [ "#E8F2E1", "#B8C2B1" ] }
         },
         "layout"     : { "@zebkit.layout.ListLayout":0 }
     },
@@ -588,12 +590,12 @@
 
         "inheritProperties" : true,
 
-        "background" : [ [ "#DCF0F7", { "@zebkit.draw.Gradient":["rgba(255, 255, 255, 0.8)", "rgba(255, 255, 255, 0.0)"] } ] ] ,
+        "background" : [ [ "#F2F2F2", { "@zebkit.draw.Gradient":["rgba(255, 255, 255, 0.8)", "rgba(255, 255, 255, 0.0)"] } ] ] ,
         "padding"   : [0,0,0,0],
         "layout"     : { "@zebkit.layout.FlowLayout": 0 },
         "views"      : {
-            "select" : { "@zebkit.draw.Gradient": [ "rgb(228,244,252)", "rgb(167,217,245)"  ] } ,
-            "marker" : { "@zebkit.draw.Gradient": [ "rgb(218,234,242)", "rgb(157,207,235)"  ] }
+            "select" : { "@zebkit.draw.Gradient": [ "#E8F2E1", "#B8C2B1" ] } ,
+            "marker" : { "@zebkit.draw.Gradient": [ "#FFFFFF", "#FBFBFB" ] }
         }
     },
 
@@ -608,15 +610,15 @@
             "padding": 2,
 
             "border": {
-                "over"        : { "@zebkit.draw.Border": [ "#32B6E6", 1, 6] },
+                "over"        : { "@zebkit.draw.Border": [ "#EFEFEF", 1, 6] },
                 "*"           : null,
-                "pressed.over": { "@zebkit.draw.Border": [ "#E6563A", 1, 6] }
+                "pressed.over": { "@zebkit.draw.Border": [ "rgba(126, 239, 104, 0.6)", 1, 6] }
             },
 
             "background": {
-                "over"        : "#E1F0F5",
+                "over"        : "#EAEBEC",
                 "*"           : null,
-                "pressed.over": "#FF8637"
+                "pressed.over": "#D8E2D1"
             }
         },
 

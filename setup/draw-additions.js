@@ -40,6 +40,41 @@ zebkit.package("draw", function(pkg, Class) {
     ]);
 
 
+    pkg.RoundCapView = Class(pkg.View, [
+        function $prototype() {
+            this[''] = function(dir, color) {
+                this.color     = (color != null ? color : "#AAAAAA");
+                this.direction = (dir   != null ? dir : "vertical");
+            };
+
+            this.paint =  function(g,x,y,w,h,d) {
+                g.beginPath();
+                if (this.direction === "vertical") {
+                    w-=3;
+                    x+=1.5;
+                    var r = w/2;
+                    g.arc(x + r, y + r, r, Math.PI, 0, false);
+                    g.lineTo(x + w, y + h - r);
+                    g.arc(x + r, y + h - r, r, 0, Math.PI, false);
+                    g.lineTo(x, y + r);
+                }
+                else {
+                    h-=3;
+                    y+=1.5;
+                    r = h/2;
+                    g.arc(x + r, y + r, r, 0.5 * Math.PI, 1.5 * Math.PI, false);
+                    g.lineTo(x + w - r, y);
+                    g.arc(x + w - r, y + h - r, r, 1.5*Math.PI, 0.5*Math.PI, false);
+                    g.lineTo(x + r, y + h);
+                }
+                g.setColor(this.color);
+                g.fill();
+            };
+        }
+    ]);
+
+
+
     pkg.ShadowRender = zebkit.Class(pkg.Render, [
         function (target) {
             this.$super(target);

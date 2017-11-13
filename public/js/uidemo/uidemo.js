@@ -1558,7 +1558,7 @@ zebkit.package("ui.demo", function(pkg, Class) {
 
         //grid.add("top", caption);
         //
-        grid.setBorder(new zebkit.draw.Border("yellow", 1));
+        //grid.setBorder(new zebkit.draw.Border("yellow", 1));
         grid.setViewProvider(new ColumnsAlignmentProvider());
         grid.setLocation(20, 20);
         for (var i = 0; i < data.rows; i++) grid.setRowHeight(i, 120);
@@ -1636,7 +1636,12 @@ zebkit.package("ui.demo", function(pkg, Class) {
             lab.setSize(100, 20);
             lab.setLocation(50, 50);
             lab.setBorder("etched");
-            pp.add(new ShaperPan(lab));
+            var sh=new ShaperPan(lab);
+            sh.setBorder(new sh.clazz.ShaperBorderSet({
+                "focuson"  : new ShaperBorder("rgba(126, 239, 104, 0.6)"),
+                "focusoff" : new ShaperBorder("#DDDDDD")
+            }));
+            pp.add(sh);
 
             var b = new Button("Button");
             b.toPreferredSize();

@@ -70,7 +70,7 @@ block content
                 ]);
 
 
-                desktop = new zCanvas(900, 750);
+                desktop = new zCanvas(1030, 750);
 
                 var root = desktop.root, nt = new Tabs(), prevSelected = -1;
 
@@ -133,10 +133,10 @@ block content
                                     background: "gray",
                                     kids: {
                                         center: new TextField(new ZebkitTextRender("Zebkit ...")).properties({
-                                            cursorView: "red",
+                                            cursorView: "black",
                                             cursorWidth: 3,
                                             selectView: "gray",
-                                            background: "black"
+                                            background: "white"
                                         }),
                                         top: new Label("Type using Zebkit font in text editor :)").properties({
                                             font: "22px Futura, Helvetica, sans-serif",
