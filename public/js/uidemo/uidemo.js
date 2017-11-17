@@ -355,118 +355,6 @@ zebkit.package("ui.demo", function(pkg, Class) {
             var r = new Panel(new BorderLayout());
             r.setPreferredSize(500,220);
 
-            /*var InOutList = Class(Panel, [
-                // inItems = array, of starting itmes
-                // inText = text, label for in list
-                // outText = text, label for out list
-                function (inItems,inText,outText) {
-                    this.$super();
-
-                    var $this=this;
-                    var hoverList = Class(List, [
-                        function getCursorType(target,x,y){
-                            return (-1!=this.getItemIdxAt(x,y))?Cursor.HAND:null;
-                        },
-                        function pointerClicked(e) {
-                            this.$super(e);
-                            var idx=e.source.getItemIdxAt(e.x,e.y);
-                            if (idx!=-1)
-                            {
-                                if (e.source==$this.inList)
-                                {
-                                    $this.outList.model.add($this.inList.model.$data[idx]);
-                                    $this.inList.model.removeAt(idx);
-                                    // fix static cursor case - bind event here as model can be overwritten and need the local x+y vars
-                                    $this.inList.model.on("elementRemoved", function(src, o, i) {
-                                        // getCanvas() == masv.edit.zebCtx except for when not in dashboard...
-                                        if (-1==$this.inList.getItemIdxAt(e.x, e.y)) $this.inList.getCanvas().element.style.cursor = "default";
-                                        // unbind evil to avoid creating multiple events
-                                        $this.inList.model._.$methods.elementRemoved.pop();
-                                        $this.inList.model._.$methods.elementRemoved.pop();
-                                    });
-                                }
-                                else if (e.source==$this.outList)
-                                {
-                                    $this.inList.model.add($this.outList.model.$data[idx]);
-                                    $this.outList.model.removeAt(idx);
-                                    $this.outList.model.on("elementRemoved", function(src, o, i) {
-                                        if (-1==$this.outList.getItemIdxAt(e.x, e.y)) $this.outList.getCanvas().element.style.cursor = "default";
-                                        $this.outList.model._.$methods.elementRemoved.pop();
-                                        $this.outList.model._.$methods.elementRemoved.pop();
-                                    });
-                                }
-                            }
-                        }
-                    ]);
-
-                    this.inList  = new hoverList([], true);
-                    this.outList = new hoverList([], true);
-
-                    this.inList.setModel(new zebkit.data.ListModel(inItems));
-                    //this.inList.border.views.focuson.color="#F7F7F7";
-                    //this.inList.border.views.focusoff.color="#F7F7F7";
-                    //this.inList.setViews({});
-                    //this.outList.border.views.focuson.color="#F7F7F7";
-                    //this.outList.border.views.focusoff.color="#F7F7F7";
-                    this.outList.provider.render.setColor("#CCCCCC");
-                    //this.outList.setViews({});
-
-                    this.inListScroll = new ScrollPan(this.inList);
-                    //this.inListScroll.setBorder("curvedsmall");
-                    //this.inListScroll.setBackground("#F7F7F7");
-
-                    this.outListScroll = new ScrollPan(this.outList);
-                    //this.outListScroll.setBorder("curvedsmall");
-                    //this.outListScroll.setBackground("#F7F7F7");
-
-                    this.setLayout(new GridLayout(2, 2, "horizontal"));
-
-                    this.titlePadding = 0;
-
-                    this.inLabel = new Label(inText);
-                    this.outLabel = new Label(outText);
-
-                    var ctr1 = new Constraints();
-                    ctr1.setPadding(0, 0, 0, 20);
-                    ctr1.ax = "right";
-
-                    var ctr2 = new Constraints();
-                    ctr2.setPadding(15, 0, 0, 0);
-                    ctr2.ax = "right";
-
-                    // 300 - 188 view.font.stringWidth(text)
-
-                    var ctr5 = new Constraints();
-                    ctr5.setPadding(0, 20, 0, 0);
-                    ctr5.ax = "left";
-
-                    var ctr6 = new Constraints();
-                    ctr6.setPadding(15, 20, 0, 0);
-                    ctr6.ax = "left";
-
-
-                    this.add(ctr2, this.inLabel);
-                    this.add(ctr6, this.outLabel);
-                    this.add(ctr1, this.inListScroll);
-                    this.add(ctr5, this.outListScroll);
-                },
-                function setSize(w, h) {
-                    this.inListScroll.setPreferredSize((w/2)-50, h-35 - this.titlePadding);
-                    this.outListScroll.setPreferredSize((w/2)-50, h-35 - this.titlePadding);
-                    this.inLabel.setPadding(0,0,this.titlePadding,((w/2)-33)-this.inLabel.getFont().stringWidth(this.inLabel.getValue()));
-                    this.$super(w, h);
-                },
-                function setTitleFont(f) {
-                    this.inLabel.setFont(f);
-                    this.outLabel.setFont(f);
-                },
-                function setTitlePadding(b) {
-                    this.titlePadding = b;
-                    this.inLabel.setPadding(0, 0, b, ((this.width/2)-33)-this.inLabel.getFont().stringWidth(this.inLabel.getValue()));
-                    this.outLabel.setPadding(0, 0, b, 0);
-                }
-            ]);*/
-
             var inOutList = new InOutList(["Honda", "BMW", "SAAB", "Volvo", "MG", "VW", "Mercedes", "Jaguar"], "Cars In", "Cars Out");
 
             r.add("center",pkg.createBorderPan("In-Out List", inOutList));
@@ -632,10 +520,6 @@ zebkit.package("ui.demo", function(pkg, Class) {
             var p = new Panel(new FlowLayout("center", "center", "horizontal", 8));
             p.add(new Button("Default"));
 
-            p.add(new ActionButton("Action"));
-
-            p.add(new ReverseButton("Back"));
-
             p.add(new Button(new Button.Link("Link button")));
 
             var bt = new Button(new ImagePan(ui.demo.butterfly));
@@ -653,7 +537,18 @@ zebkit.package("ui.demo", function(pkg, Class) {
             var bp = pkg.createBorderPan("Buttons", p);
             bp.setPadding(8);
             pp.add("center",bp);
-            pp.add("bottom",new LoadingButton("Loading / Wait Button"));
+
+            p = new Panel(new FlowLayout("center", "center", "horizontal", 8));
+
+            p.add(new ActionButton("Action"));
+
+            p.add(new ReverseButton("Back"));
+
+            p.add(new LoadingButton("Loading / Wait Button"));
+
+            bp = pkg.createBorderPan("New Buttons", p);
+            bp.setPadding(8);
+            pp.add("bottom",bp);
             return pp;
         },
 
