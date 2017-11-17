@@ -193,4 +193,127 @@ zebkit.package("ui", function(pkg, Class) {
             this.kids[0].setPreferredSize(w, h);
         }
     ]);
+
+    pkg.HoverList = Class(pkg.List, [
+        function getCursorType(target,x,y){
+            return (-1!=this.getItemIdxAt(x,y))?pkg.Cursor.HAND:null;
+        }
+    ]);
+
+    pkg.InOutList = Class(pkg.Panel, [
+        // inItems = array, of starting itmes
+        // inText = text, label for in list
+        // outText = text, label for out list
+        function (inItems,inText,outText) {
+            this.$super();
+
+            var $this=this;
+
+            this.inList  = new pkg.HoverList([], true);
+            this.inList.extend([
+                function pointerClicked(e) {
+                    this.$super(e);
+                    $this.handleClick(e);
+                }
+            ]);
+            this.outList = new pkg.HoverList([], true);
+            this.outList.extend([
+                function pointerClicked(e) {
+                    this.$super(e);
+                    $this.handleClick(e);
+                }
+            ]);
+
+
+            this.inList.setModel(new zebkit.data.ListModel(inItems));
+            this.outList.provider.render.setColor(this.disabledColor);
+
+            this.inListScroll = new this.clazz.InOutScroll(this.inList);
+
+            this.outListScroll = new this.clazz.InOutScroll(this.outList);
+
+            this.setLayout(new zebkit.layout.GridLayout(2, 2, "horizontal"));
+
+            this.titlePadding = 0;
+
+            this.inLabel = new pkg.Label(inText);
+            this.outLabel = new pkg.Label(outText);
+
+            var ctr1 = new zebkit.layout.Constraints();
+            ctr1.setPadding(0, 0, 0, 20);
+            ctr1.ax = "right";
+
+            var ctr2 = new zebkit.layout.Constraints();
+            ctr2.setPadding(15, 0, 0, 0);
+            ctr2.ax = "right";
+
+
+            var ctr5 = new zebkit.layout.Constraints();
+            ctr5.setPadding(0, 20, 0, 0);
+            ctr5.ax = "left";
+
+            var ctr6 = new zebkit.layout.Constraints();
+            ctr6.setPadding(15, 20, 0, 0);
+            ctr6.ax = "left";
+
+
+            this.add(ctr2, this.inLabel);
+            this.add(ctr6, this.outLabel);
+            this.add(ctr1, this.inListScroll);
+            this.add(ctr5, this.outListScroll);
+        },
+        function handleClick(e)
+        {
+            var idx=e.source.getItemIdxAt(e.x,e.y);
+            var $this=this;
+            if (idx!=-1)
+            {
+                if (e.source==this.inList)
+                {
+                    this.outList.model.add(this.inList.model.$data[idx]);
+                    this.inList.model.removeAt(idx);
+                    // fix static cursor case - bind event here as model can be overwritten and need the local x+y vars
+                    this.inList.model.on("elementRemoved", function(src, o, i) {
+                        // getCanvas() == masv.edit.zebCtx except for when not in dashboard...
+                        if (-1==$this.inList.getItemIdxAt(e.x, e.y)) $this.inList.getCanvas().element.style.cursor = "default";
+                        // unbind evil to avoid creating multiple events
+                        $this.inList.model._.$methods.elementRemoved.pop();
+                        $this.inList.model._.$methods.elementRemoved.pop();
+                    });
+                }
+                else if (e.source==$this.outList)
+                {
+                    this.inList.model.add($this.outList.model.$data[idx]);
+                    this.outList.model.removeAt(idx);
+                    this.outList.model.on("elementRemoved", function(src, o, i) {
+                        if (-1==$this.outList.getItemIdxAt(e.x, e.y)) $this.outList.getCanvas().element.style.cursor = "default";
+                        $this.outList.model._.$methods.elementRemoved.pop();
+                        $this.outList.model._.$methods.elementRemoved.pop();
+                    });
+                }
+            }
+        },
+        function $prototype() {
+            this.disabledColor = "#CCCCCC";
+        },
+        function $clazz()
+        {
+            this.InOutScroll = Class(pkg.ScrollPan, []);
+        },
+        function setSize(w, h) {
+            this.inListScroll.setPreferredSize((w/2)-50, h-35 - this.titlePadding);
+            this.outListScroll.setPreferredSize((w/2)-50, h-35 - this.titlePadding);
+            this.inLabel.setPadding(0,0,this.titlePadding,((w/2)-33)-this.inLabel.getFont().stringWidth(this.inLabel.getValue()));
+            this.$super(w, h);
+        },
+        function setTitleFont(f) {
+            this.inLabel.setFont(f);
+            this.outLabel.setFont(f);
+        },
+        function setTitlePadding(b) {
+            this.titlePadding = b;
+            this.inLabel.setPadding(0, 0, b, ((this.width/2)-33)-this.inLabel.getFont().stringWidth(this.inLabel.getValue()));
+            this.outLabel.setPadding(0, 0, b, 0);
+        }
+    ]);
 });

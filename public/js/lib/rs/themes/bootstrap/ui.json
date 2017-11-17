@@ -407,6 +407,27 @@
         }
     },
 
+    "HoverList": {
+        "inheritProperties" : true,
+        "views" : {
+            "select"    : null,
+            "topMarker" : null,
+            "marker"    : null
+        },
+        "border" : {
+            "focuson"  :  { "@zebkit.draw.Border": [ "#F7F7F7", 3, 4 ] },
+            "focusoff" :  { "@zebkit.draw.Border": [ "#F7F7F7", 3, 4 ] }
+        }
+    },
+
+    "InOutList" : {
+        "InOutScroll" : {
+            "inheritProperties" : true,
+            "background": "#F7F7F7",
+            "border" : "curvedsmall"
+        }
+    },
+
     "ImageLabel": {
         "padding": 4,
         "Label"  : {
