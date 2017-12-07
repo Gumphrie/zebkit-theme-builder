@@ -41,10 +41,16 @@
     },
 
     "pictures" : {
-        "zebkit" : "%{<img> zebkit.png}",
-        "halflings" : "%{<img> glyphicons-halflings.png}",
-        "open_folder" : "%{<img> open_folder_green.png}",
-        "closed_folder" : "%{<img> closed_folder_green.png}"
+        "zebkit"         : "%{<img> zebkit.png}",
+        "halflings"      : "%{<img> glyphicons-halflings.png}",
+        "open_folder"    : "%{<img> open_folder_green.png}",
+        "closed_folder"  : "%{<img> closed_folder_green.png}",
+        "edit_undo"      : "%{<img> undo.png}",
+        "edit_redo"      : "%{<img> redo.png}",
+        "edit_bold"      : "%{<img> bold.png}",
+        "edit_italics"   : "%{<img> italics.png}",
+        "edit_underline" : "%{<img> underline.png}",
+        "color_pallet"   : "%{<img> color_pallet.png}"
     },
 
     "BoldLabel": {
@@ -185,11 +191,11 @@
                 "pressed.disabled" : "lightGray"
             },
             "view": {
-                "pressed.out"       : { "@zebkit.draw.CheckboxCustomView": [ "%{palette.mainColor}", "%{palette.mainColor}" ] },
+                "pressed.out"       : { "@zebkit.draw.CheckboxTickView": [ "%{palette.mainColor}", "%{palette.mainColor}" ] },
                 "out"               : { "@zebkit.draw.View": [] },
-                "over"              : { "@zebkit.draw.CheckboxCustomView": [ "lightGray" ] },
-                "pressed.over"      : { "@zebkit.draw.CheckboxCustomView": [ "rgb(126, 239, 104)" ] },
-                "pressed.disabled"  : { "@zebkit.draw.CheckboxCustomView": [ "%{palette.borderColor}", "%{palette.borderColor}" ] },
+                "over"              : { "@zebkit.draw.CheckboxTickView": [ "lightGray" ] },
+                "pressed.over"      : { "@zebkit.draw.CheckboxTickView": [ "rgb(126, 239, 104)" ] },
+                "pressed.disabled"  : { "@zebkit.draw.CheckboxTickView": [ "%{palette.borderColor}", "%{palette.borderColor}" ] },
                 "disabled"          : { "@zebkit.draw.View": [] }
             }
         },
@@ -704,8 +710,8 @@
                 "background" : null,
                 "border": null,
                 "view" : {
-                    "*"          : { "@zebkit.draw.ToggleView": [ true, "gray", null, 14, 14, null ]},
-                    "pressed.*"  : { "@zebkit.draw.ToggleView": [ false, "gray", null, 14, 14, null ]}
+                    "*"          : { "@zebkit.draw.ToggleView": [ true, "white", "lightGray", 12, 12, {"@zebkit.draw.Border": ["%{palette.highlightColor}", 1, 3] } ] },
+                    "pressed.*"  : { "@zebkit.draw.ToggleView": [ false, "white", "lightGray", 12, 12, {"@zebkit.draw.Border": ["%{palette.highlightColor}", 1, 3] } ] }
                 }
             }
         },

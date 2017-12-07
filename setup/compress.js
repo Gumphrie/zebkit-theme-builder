@@ -10,12 +10,13 @@ module.exports = function() {
           config = require('../config.js');
 
 
-    console.log('getting zebkit library - please wait...');
+    console.log('getting zebkit framework - please wait...');
 
     clone('https://github.com/barmalei/zebkit');
 
-    console.log('zebkit library retrieved - applying patches...');
+    console.log('zebkit framework retrieved - applying patches...');
 
+    // patch zebkit.draw
     replace({
         files: 'zebkit/gulpfile.js',
         from: '"src/js/draw/draw.common.js",',
@@ -25,6 +26,7 @@ module.exports = function() {
             return console.error('Error occurred:', error);
         }
 
+        // patch zebkit.ui
         replace({
             files: 'zebkit/gulpfile.js',
             from: '"src/js/ui/spin/ui.spin.js"',
@@ -38,6 +40,7 @@ module.exports = function() {
 
             let gulp = new GulpRunner('zebkit/gulpfile.js');
 
+            // build zebkit.js unminified without theme
             gulp.run('runtime', (err) => {
                 if (err) {
                     console.log('failed to build zebkit runtime with error:' + err);
@@ -47,6 +50,7 @@ module.exports = function() {
                 fs.copySync(__dirname + '/../zebkit/build/zebkit.js', __dirname + '/../public/js/lib/zebkit.js');
                 fs.removeSync(__dirname + '/../zebkit/build');
 
+                // build zebkit.min.js minified and bundled with ZFS theme
                 gulp.run('zebkit', {
                     bundle: config.theme
                 }, (err) => {

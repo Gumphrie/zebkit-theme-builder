@@ -353,15 +353,377 @@ zebkit.package("ui.demo", function(pkg, Class) {
             this.$super();
             this.setLayout(new FlowLayout("center", "center"));
             var r = new Panel(new BorderLayout());
-            r.setPreferredSize(500,220);
+            r.setPreferredSize(1000,650);
 
             var inOutList = new InOutList(["Honda", "BMW", "SAAB", "Volvo", "MG", "VW", "Mercedes", "Jaguar"], "Cars In", "Cars Out");
 
-            r.add("center",pkg.createBorderPan("In-Out List", inOutList));
+            inOutList.setPreferredSize(1000,250);
+
+            r.add("top",pkg.createBorderPan("In-Out List", inOutList));
+
+            pkg.editCloseText = zebkit.Class(Panel, [
+                function(t , u , cb) {
+
+                    this.$super(new zebkit.layout.FlowLayout("left", "bottom", "horizontal", 1));
+                    this.setPadding(5);
+                    this.font = new zebkit.Font("Arial", "", 14);
+
+                    this.textEdit = new TextField(t);
+
+                    this.textEdit.setFont(this.font);
+                    this.textEdit.setPreferredSize(54, 23);
+
+                    this.link = new Link("×");
+                    this.link.setPadding(0 , 1, 0 ,1 );
+                    this.link.setFont(new zebkit.Font("Arial", "bold", 16));
+                    this.link.setColor("pressed.over", "#ffffff");
+                    this.link.setColor("out", "#aaa");
+                    this.link.setColor("over", "#111111");
+                    //this.link.overDecoration = "";
+
+                    this.label = new Label(t);
+                    this.label.setFont(this.font);
+                    this.label.setColor("#222");
+
+                    this.labelP =  new Panel(new zebkit.layout.FlowLayout("left", "bottom", "horizontal", 1));
+                    this.labelP.setBackground("#e4e4e4");
+                    this.labelP.setBorder(new zebkit.draw.Border('#aaa' , 1 , 2 ));
+                    this.labelP.setPadding(4, 4, 1 , 4);
+
+                    this.labelP.add(this.link);
+                    this.labelP.add(this.label);
+
+
+                    var self = this;
+                    this.textEdit.extend([
+                        function keyPressed(e) {
+                            this.$super(e);
+                            if (e.code === "Enter"){
+                                self.editToLabel(self.textEdit.getValue());
+                                t = self.textEdit.getValue();
+                            }
+                        }
+                    ]);
+
+                    this.editToLabel =  function(val , check){
+                        this.label.setValue(val);
+                        this.removeAll();
+                        this.add(this.labelP);
+                        !check ? cb ? cb(this, true) : '' : null;
+                    }.bind(this);
+
+                    self.size = self.font.stringWidth(self.label.getValue());
+
+                    this.label.extend([
+                        function pointerPressed(e){
+                            self.textEdit.setValue(self.label.getValue());
+                            self.size = self.font.stringWidth(self.label.getValue());
+                            self.textEdit.setPreferredSize(self.size > 40 ? self.size : 40 +  4 , 23);
+                            self.remove(self.labelP);
+                            self.add(self.textEdit);
+                            self.textEdit.requestFocusIn(10);
+                        }
+                    ]);
+
+                    this.link.extend([
+                        function pointerPressed(e){
+                            self.removeMe();
+                            cb ? cb(this , false) : '';
+                        }
+                    ]);
+
+                    if(u) this.add(this.textEdit);
+                    else {
+                        this.add(this.labelP);
+                    }
+                },
+                function setFont(font) {
+                    this.textEdit.setFont(font);
+                },
+                function setValue(v) {
+                    this.textEdit.setValue(v);
+                },
+                function setTextWidth(w) {
+                    this.textEdit.setTextWidth(w);
+                },
+                function setEditFalse(val){
+                    val ? this.editToLabel(val , true) : this.removeMe();
+                }
+            ]);
+
+            var TagList = zebkit.Class(Panel, [
+                function(t , w , cb) {
+                    this.$super(new zebkit.layout.FlowLayout("left" , "bottom" , "horizontal", 0 ));
+                    this.setBorder(new zebkit.draw.Border('black' , 0.5 , 1 ));
+                    var self = this;
+                    self.w = w;
+                    this.setPreferredSize(self.w, 42);
+                    this.mainP = new Panel(new zebkit.layout.FlowLayout("left" , "bottom" , "horizontal", 0 ));
+
+                    function addEditCloseText(val , edit) {
+                        return  new pkg.editCloseText(val , edit , function(editCloseText , val){
+                            var mainPwid = 0;
+                            editCloseText.parent.kids.forEach(function(ele){ mainPwid += (ele.width + ele.left + ele.right); });
+                            if(val) {
+                                mainPwid + 10 > self.w ? self.newCanvas() : null; // call after edit text box
+                            } else {
+                                if(!self.kids[0].kids.length){
+                                    t.push('');
+                                    self.add(addEditCloseText(t[t.length-1]  , true));
+                                }  // condition for check no text box on canvas
+                                editCloseText.parent.kids.indexOf(editCloseText.parent) + 1 ?   self.newCanvas() : null; //check on close text box
+                            }
+                            this.latestValue = editCloseText.textEdit && editCloseText.textEdit.getValue() ? editCloseText.textEdit.getValue() : editCloseText.label ? editCloseText.label.getValue() : '';
+                            t.indexOf(this.val) != -1 ? t[t.indexOf(this.val)] = this.latestValue : null;
+                            this.val = this.latestValue;
+                            cb ? cb() : null;
+                        }.bind({val : val}));
+                    }
+                    self.add(this.mainP);
+                    t.forEach(function (val) {
+                        self.mainP.add(addEditCloseText(val , false));
+                    });
+
+                    self.newCanvas = function(v) {
+                        var allEle = [];
+                        var _ = this;
+                        self.kids.forEach(function(p){
+                            p.kids.forEach(function(ele){
+                                allEle.push(ele);
+                            })
+                        });
+                        _.mainP = new Panel(new zebkit.layout.FlowLayout("left" , "bottom" , "horizontal" , 0 ));
+                        _.mainPwid = 0;
+                        while(self.kids.length > 0) {
+                            self.kids[self.kids.length - 1].removeMe();
+                        }
+                        allEle.forEach(function(ele, key){
+                            ele.width = v ? ele.size * 2 : ele.width;
+                            _.mainPwid += (ele.width + ele.left + ele.right);
+                            if(_.mainPwid + 18 > self.w){
+                                self.add(_.mainP);
+                                _.mainP = new Panel(new zebkit.layout.FlowLayout("left" , "bottom" , "horizontal" , 0 ));
+                                _.mainP.add(ele);
+                                _.mainPwid = (ele.width + ele.left + ele.right);
+                            } else {
+                                _.mainP.add(ele);
+                            }
+                        });
+
+                        self.add(_.mainP);
+                        this.line = (Math.ceil(_.mainPwid / self.w) +  self.kids.length - 1 );
+                        self.setPreferredSize(self.w ,  this.line * 45);
+                    };
+                    self.extend([
+                        function pointerPressed(e){
+                            var mainPwid = chackwid();
+                            t.push('');
+                            if(mainPwid + 40 > self.w){
+                                self.newCanvas();
+                                self.kids[self.kids.length - 1].add(addEditCloseText(t[t.length-1] , true));
+                            } else {
+                                self.kids[self.kids.length - 1].add(addEditCloseText(t[t.length-1] , true));
+                            }
+                            self.kids[self.kids.length - 1].kids[self.kids[self.kids.length - 1].kids.length-1].kids[0].requestFocusIn(100);
+                        }
+                    ]);
+
+                    function chackwid(){
+                        var mainPwid = 0;
+                        self.kids[self.kids.length - 1].kids.forEach(function(ele){
+                            this.val = ele.textEdit && ele.textEdit.getValue() ? ele.textEdit.getValue() : ele.label ? ele.label.getValue() : '';
+                            ele.setEditFalse ? ele.setEditFalse(this.val) : null;
+                            mainPwid += (ele.width + ele.left + ele.right);
+                        });
+                        return mainPwid;
+                    }
+                    self.newCanvas(true);
+
+                },
+                function setPanelSize(width){
+                    var self = this;
+                    self.w = width;
+                    this.newCanvas(true);
+                }
+            ]);
+
+            var contentP = new Panel(new FlowLayout("left", "bottom", "horizontal" , 10));
+
+            var multi = new TagList(['aaa','bbb'] , 400, function(){
+
+            });
+            contentP.add(multi);
+
+            r.add("center",pkg.createBorderPan("Tag List", contentP));
+
 
             this.add(r);
         }
     ]);
+
+
+
+    pkg.TextEditDemo = new Class(pkg.DemoPan, [
+        function() {
+            this.$super();
+            this.setLayout(new FlowLayout("center", "center"));
+            //var r = new Panel(new BorderLayout());
+            //r.setPreferredSize(1000,650);
+
+
+            var sampleData = [
+                {
+                    "text": "Welcome!\n",
+                    "size": 30
+                },
+                {
+                    "text": "You've found the demo page for "
+                },
+                {
+                    "text": "Zebkit Text Editor",
+                    "bold": true,
+                    "color": "orange",
+                    "size": 18
+                },
+                {
+                    "text": ", a rich text editor implemented entirely in JavaScript that uses HTML5 Canvas for rendering. Most in-browser editors use a built-in feature called "
+                },
+                {
+                    "text": "contentEditable",
+                    "font": "Monospace"
+                },
+                {
+                    "text": " to do most of the hard work, but this has some limitations and drawbacks that are just too much for more sensitive people, like me, to bear, so I decided to start from scratch. (Anyway, it's fun to write your own editor!) \n\nThe source code is released under the very permissive "
+                },
+                {
+                    "text": "Apache license",
+                    "bold": true
+                },
+                {
+                    "text": ", so you can do pretty much anything you want with it. \n\nAt runtime Zebkit Text Editor has "
+                },
+                {
+                    "text": "no external dependencies apart from Zebkit",
+                    "italic": true
+                },
+                {
+                    "text": ". You just pull in the zebkit.min.js file using the SCRIPT tag and away you go. Or else get node and use: \n\n"
+                },
+                {
+                    "text": " npm install\n gulp\n gulp runtime",
+                    "font": "Monospace"
+                },
+                {
+                    "text": " \n\nto get the full source, including this demo site. By the way, "
+                },
+                {
+                    "text": "Zebkit Text Editor",
+                    "bold": true,
+                    "color": "orange",
+                    "size": 18
+                },
+                {
+                    "text": " itself is displaying all this text, meaning that you can play with the editor right now! Try "
+                },
+                {
+                    "text": "Ctrl+A",
+                    "font": "Monospace"
+                },
+                {
+                    "text": " and then "
+                },
+                {
+                    "text": "Backspace",
+                    "font": "Monospace"
+                },
+                {
+                    "text": " to clear this document and see how the JSON view on the right changes as you make further edits. Press "
+                },
+                {
+                    "text": "Ctrl+Z",
+                    "font": "Monospace"
+                },
+                {
+                    "text": " to undo your changes. \n\n"
+                },
+                {
+                    "text": "Click the links below for more information...",
+                    "bold": true
+                },
+                {
+                    "text": "\n\n"
+                }
+            ];
+
+            var panel = new Panel(new BorderLayout());
+
+
+            var textArea=new TextArea(JSON.stringify(sampleData,null,4));
+            textArea.setBackground('#1E1E1E');
+            textArea.setColor('#00C814');
+            textArea.setCursorView("white");
+            textArea.setFont(new zebkit.Font('Courier New', 'bold', 14));
+            var textAreaScroll=new ScrollPan(textArea);
+            textAreaScroll.setPreferredSize(500,500);
+
+            var textEditor = new TextEditor(new BorderLayout(),sampleData,620,620);
+            textEditor.isEditable=true;
+
+            textEditor.scrollPan.extend([
+                function setSize(w,h) {
+                    this.$super(w, h);
+
+                    if (textEditor.prefWidth != w ||
+                        textEditor.scrollHeight != h)
+                    {
+                        textEditor.prefWidth = w;
+                        textEditor.scrollHeight = h;
+
+                        textEditor.clearSelection();
+                        textEditor.historyRefresh(textEditor.historyIdx);
+                    }
+                }
+            ]);
+
+            textEditor.eventDispatcher.on('historyChange', function(e)
+            {
+                textArea.setValue(JSON.stringify(textEditor.makeJsonText(),null,4));
+                textArea.scrollManager.scrollYTo(0);
+                textEditor.requestFocus();
+            });
+
+            textArea.extend([
+                function keyReleased(e)
+                {
+                    //this.$super(e);
+
+                    try
+                    {
+                        textEditor.clearSelection();
+
+                        var obj=JSON.parse(textArea.getValue());
+
+                        textEditor.history.push(textEditor.historyObj(textEditor.kids.length-1,textEditor.getOffsetIndex(textEditor.focusLine, textEditor.focusOffset),0,obj));
+                        textEditor.historyIdx++;
+
+                        textEditor.historyRefresh(textEditor.historyIdx);
+                    }
+                    catch (e) {}
+                }
+            ]);
+
+            var ctrls = new TextEditorControls(textEditor);
+            panel.add("top",ctrls);
+
+            panel.add("center", new SplitPan(textEditor.scrollPan, textAreaScroll).properties({
+                gripperLoc:700
+            }));
+
+
+            this.add(panel);
+        }
+    ]);
+
 
     pkg.BasicUIDemo = new Class(pkg.DemoPan, [
         function() {

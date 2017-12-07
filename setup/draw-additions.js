@@ -6,7 +6,7 @@ zebkit.package("draw", function(pkg, Class) {
      * @constructor
      * @param {String} [color] color of the ticker
      */
-    pkg.CheckboxCustomView = Class(pkg.View, [
+    pkg.CheckboxTickView = Class(pkg.View, [
         function(color) {
             if (arguments.length > 0) {
                 this.color = color;
