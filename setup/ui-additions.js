@@ -2449,7 +2449,7 @@ zebkit.package("ui", function(pkg, Class) {
                                 currentLine.add(label);
                                 if (item.align)
                                 {
-                                    currentLine.setLayout(new zebkit.layout.FlowLayout(item.align=='right'?RIGHT:item.align=='center'?"center":"left", "top", "horizontal", 0));
+                                    currentLine.setLayout(new zebkit.layout.FlowLayout(item.align=='right'?'right':item.align=='center'?"center":"left", "top", "horizontal", 0));
                                 }
                                 context.adjustLinePadding(currentLine);
                                 words.shift();
@@ -2475,7 +2475,7 @@ zebkit.package("ui", function(pkg, Class) {
                                 currentLine.add(label);
                                 if (item.align)
                                 {
-                                    currentLine.setLayout(new zebkit.layout.FlowLayout(item.align=='right'?RIGHT:item.align=='center'?"center":"left", "top", "horizontal", 0));
+                                    currentLine.setLayout(new zebkit.layout.FlowLayout(item.align=='right'?'right':item.align=='center'?"center":"left", "top", "horizontal", 0));
                                 }
                                 context.adjustLinePadding(currentLine);
 
