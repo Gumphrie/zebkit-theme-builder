@@ -19,7 +19,7 @@
 
         "Checkbox": {
             "inheritProperties" : true,
-            "layout": { "@zebkit.layout.FlowLayout": [ "center", "center" ]},
+            "flowLayout": [ "center", "center" ],
             "border": { "@zebkit.draw.Border":  "%{zebkit.ui.palette.highlightColor}" }
         }
     },
@@ -33,9 +33,9 @@
 
         "StatusPan": {
             "view" : {
-                "*"       : { "@zebkit.draw.ArrowView" : [ "left", "black" ], "width" : 9, "height" : 9  },
-                "ascent"  : { "@zebkit.draw.ArrowView" : [ "top", "%{zebkit.ui.palette.mainColor}"  ]   },
-                "descent" : { "@zebkit.draw.ArrowView" : [ "bottom", "%{zebkit.ui.palette.mainColor}" ] }
+                "*"       : { "@zebkit.draw.ArrowView" : [ "left", null, "black" ], "width" : 9, "height" : 9  },
+                "ascent"  : { "@zebkit.draw.ArrowView" : [ "top", null, "%{zebkit.ui.palette.mainColor}"  ]   },
+                "descent" : { "@zebkit.draw.ArrowView" : [ "bottom", null, "%{zebkit.ui.palette.mainColor}" ] }
             }
         },
 
