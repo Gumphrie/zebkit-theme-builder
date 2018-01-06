@@ -336,6 +336,29 @@ zebkit.package("ui", function(pkg, Class) {
                 return this;
             };
             this.setModel(r);
+        },
+        function update(g) {
+            if (this.parent && this.parent.parent && this.parent.parent.hasSelection()) {
+                g.setColor(this.selectionColor);
+
+                var params=this.parent.parent.getSelectedRange(),
+                    startOffset=Math.max(0,Math.min(this.width,params.start.offset-this.x)),
+                    endOffset=Math.min(this.width,Math.max(0,params.end.offset-this.x)),
+                    i = this.parent.parent.kids.indexOf(this.parent);
+
+                if (i == params.minIdx && i == params.maxIdx) {
+                    g.fillRect(startOffset + params.start.line.kids[0].x, 0, endOffset-startOffset, this.height);
+                }
+                else if (i == params.minIdx) {
+                    g.fillRect(startOffset + params.start.line.kids[0].x, 0, this.width - startOffset, this.height);
+                }
+                else if (i == params.maxIdx) {
+                    g.fillRect(params.start.line.kids[0].x, 0, endOffset, this.height);
+                }
+                else if (i > params.minIdx && i < params.maxIdx) {
+                    g.fillRect(0, 0, this.width, this.height);
+                }
+            }
         }
     ]);
 
@@ -578,33 +601,6 @@ zebkit.package("ui", function(pkg, Class) {
         },
         function update(g) {
             if (this.hasSelection()) {
-                g.setColor("#B7C2B0");
-
-                var params=this.getSelectedRange();
-
-                for (var i=params.minIdx;i<=params.maxIdx;i++) {
-
-                    var ps = this.kids[i].getPreferredSize(), height=ps.height, width=ps.width;
-
-                    if (i==params.minIdx && i==params.maxIdx)
-                    {
-                        g.fillRect(params.start.offset+params.start.line.kids[0].x, params.start.line.y, params.end.offset-params.start.offset, height);
-                        break;
-                    }
-                    else if (i==params.minIdx)
-                    {
-                        g.fillRect(params.start.offset+params.start.line.kids[0].x, params.start.line.y, width-params.start.offset, height);
-                    }
-                    else if (i==params.maxIdx)
-                    {
-                        g.fillRect(this.kids[i].kids[0].x, this.kids[i].y, params.end.offset, height);
-                        break;
-                    }
-                    else if (i>params.minIdx && i<params.maxIdx)
-                    {
-                        g.fillRect(this.kids[i].kids[0].x, this.kids[i].y, width, height);
-                    }
-                }
                 this.selectionRendered=true;
             }
             else this.selectionRendered=false;
@@ -3132,11 +3128,11 @@ zebkit.package("ui", function(pkg, Class) {
                     $this.clearSelection();
                     $this.startPosition.line = $this.kids[params.minIdx];
                     $this.startPosition.offset = params.start.offset;
-                    $this.endPosition.line = $this.kids[params.maxIdx];
-                    $this.endPosition.offset = params.end.offset;
-                    $this.focusOffset = params.end.offset;
-                    $this.focusLine = $this.kids[params.maxIdx];
-                    $this.focusLineIdx = params.maxIdx;
+                    //$this.endPosition.line = $this.kids[params.maxIdx];
+                    //$this.endPosition.offset = params.end.offset;
+                    //$this.focusOffset = params.end.offset;
+                    //$this.focusLine = $this.kids[params.maxIdx];
+                    //$this.focusLineIdx = params.maxIdx;
 
                     var indexLen = startIdx;
                     for (i = 0; i < $this.startPosition.line.kids.length; i++) {
@@ -3290,12 +3286,12 @@ zebkit.package("ui", function(pkg, Class) {
                     if (val == "") val = "0";
                     if (val != src.source.$buf) {
                         src.source.$buf = val;
-                        src.setValue(val);
+                        if (src.setValue) src.setValue(val);
                     }
-                    function getArg(o) {
-                        return o != box ? o.getValue() : val;
-                    }
-                    updateColour([getArg(r), getArg(g), getArg(b)]);
+                    //function getArg(o) {
+                    //    return o != box ? o.getValue() : val;
+                    //}
+                    //updateColour([getArg(r), getArg(g), getArg(b)]);
                     box.requestFocusIn(100);
                 });
                 return box;
@@ -3318,6 +3314,11 @@ zebkit.package("ui", function(pkg, Class) {
             showColour.setBackground("rgb(" + r.getValue() + "," + g.getValue() + "," + b.getValue() + ")");
             showColour.setPreferredSize(90, 90);
             showColour.setPadding(10, 10, 10, 10);
+            showColour.extend([
+                function pointerPressed(e) {
+                    updateColour([r.getValue(), g.getValue(), b.getValue()]);
+                }
+            ]);
 
             var rgbPanel = new pkg.Panel();
             rgbPanel.setLayout(new zebkit.layout.GridLayout(3, 2, "horizontal"));

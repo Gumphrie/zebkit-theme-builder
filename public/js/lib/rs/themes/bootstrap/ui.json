@@ -800,5 +800,9 @@
 
     "StatusBarPan" : {
         "borderView" : "etched"
+    },
+
+    "DecoratorLabel" : {
+        "selectionColor" : "%{palette.overColor}"
     }
 }
