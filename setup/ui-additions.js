@@ -2548,10 +2548,10 @@ zebkit.package("ui", function(pkg, Class) {
 
             var btnRow1 = new pkg.Panel();
             btnRow1.setLayout(new zebkit.layout.FlowLayout("left", "center", "horizontal", 2));
-            btnRow1.setBackground("rgba(240,240,240,1)");
+            btnRow1.setBackground(this.rowBackgroundColor);
             var btnRow2 = new pkg.Panel();
             btnRow2.setLayout(new zebkit.layout.FlowLayout("left", "center", "horizontal", 2));
-            btnRow2.setBackground("rgba(240,240,240,1)");
+            btnRow2.setBackground(this.rowBackgroundColor);
 
             var fonts = [
                 "Andale Mono",
@@ -2662,8 +2662,8 @@ zebkit.package("ui", function(pkg, Class) {
             this.textBackColourBtn = this.createButton2(false, 36, 36, btnRow2, "Text Background Color", true);
             this.textBackColourBtn.setBackground("rgba(255,255,255,0)");
             this.textBackColourBtn.setBorder(new zebkit.draw.ViewSet({
-                'focuson': new zebkit.draw.Border("rgba(126, 239, 104, 0.6)", 2, 0),
-                'focusoff': new zebkit.draw.Border("#C5C5C5", 2, 2)
+                'focuson': new zebkit.draw.Border(this.buttonFocusColor, 2, 0),
+                'focusoff': new zebkit.draw.Border(this.buttonBackColor, 2, 2)
             }));
             this.textBackColourBtn.on(function (src) {
                 $this.colorPicker(edit, "background", src, edit.selectedBackground, function(){
@@ -2746,14 +2746,14 @@ zebkit.package("ui", function(pkg, Class) {
             var historyChange =function(e)
             {
                 if (edit.historyIdx==0) {
-                    $this.undoBtn.setBackground("rgba(133,133,133,0)")
+                    $this.undoBtn.setBackground("rgba(255,255,255,0)")
                 } else {
-                    $this.undoBtn.setBackground("rgba(133,133,133,1)")
+                    $this.undoBtn.setBackground($this.historyButtonBackColor)
                 }
                 if (edit.historyIdx>=edit.history.length-1) {
-                    $this.redoBtn.setBackground("rgba(133,133,133,0)")
+                    $this.redoBtn.setBackground("rgba(255,255,255,0)")
                 } else {
-                    $this.redoBtn.setBackground("rgba(133,133,133,1)")
+                    $this.redoBtn.setBackground($this.historyButtonBackColor)
                 }
             };
             historyChange();
@@ -2779,7 +2779,7 @@ zebkit.package("ui", function(pkg, Class) {
                 edit.eventDispatcher.off('historyChange', historyChange);
             };
 
-            this.setBackground("rgba(240,240,240,1)");
+            this.setBackground(this.rowBackgroundColor);
             this.setLayout(new zebkit.layout.GridLayout(4, 1, "horizontal"));
             this.add(btnRow1);
             this.add(btnRow2);
@@ -2793,19 +2793,19 @@ zebkit.package("ui", function(pkg, Class) {
             if (value != undefined) {
                 if (value) {
                     button.setBorder(new zebkit.draw.ViewSet({
-                        'focuson': new zebkit.draw.Border("rgba(126, 239, 104, 0.6)", 2, 0),
-                        'focusoff': new zebkit.draw.Border("green", 3, 2)
+                        'focuson': new zebkit.draw.Border(this.buttonFocusColor, 2, 0),
+                        'focusoff': new zebkit.draw.Border(this.buttonSelectedColor, 3, 2)
                     }));
                     return false;
                 } else {
                     button.setBorder(new zebkit.draw.ViewSet({
-                        'focuson': new zebkit.draw.Border("rgba(126, 239, 104, 0.6)", 2, 0),
-                        'focusoff': new zebkit.draw.Border("#C5C5C5", 1, 2)
+                        'focuson': new zebkit.draw.Border(this.buttonFocusColor, 2, 0),
+                        'focusoff': new zebkit.draw.Border(this.buttonBackColor, 1, 2)
                     }));
                     return false;
                 }
             }
-            else return (button.border.views.focusoff.color == "#C5C5C5");
+            else return (button.border.views.focusoff.color == this.buttonBackColor);
         },
         function createButton2(img, width, height, row, tip, notext)
         {
@@ -2830,7 +2830,7 @@ zebkit.package("ui", function(pkg, Class) {
                 l.setPadding(1);
                 return l;
             };
-            var t1 = createLabel(tip, "#6FAA42");
+            var t1 = createLabel(tip, this.tipTextColor);
             t1.setPadding(6);
             t1.setBackground("#fff");
             button.tooltip = t1;
@@ -2863,7 +2863,7 @@ zebkit.package("ui", function(pkg, Class) {
                 l.setPadding(1);
                 return l;
             };
-            var t1 = createLabel(tip, "#6FAA42");
+            var t1 = createLabel(tip, this.tipTextColor);
             t1.setPadding(6);
             t1.setBackground("#fff");
             comboList.tooltip = t1;

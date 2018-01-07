@@ -19,6 +19,7 @@
         "highlightColor" : "rgba(126, 239, 104, 0.6)",
         "overColor"      : "#B8C2B1",
         "selectColor"    : "#D8E2D1",
+        "themeGray"      : "#C5C5C5",
         "gray"           : "#A1A1A1",
         "gray1"          : "#A1A1A1",
         "gray2"          : "#AAAAAA",
@@ -33,10 +34,10 @@
         "raised" : { "@zebkit.draw.Raised":[] },
         "sunken" : { "@zebkit.draw.Sunken":[] },
         "etched" : { "@zebkit.draw.Etched":[] },
-        "plain"  : { "@zebkit.draw.Border" : [ "#C5C5C5", 1, 3 ]  },
+        "plain"  : { "@zebkit.draw.Border" : [ "%{palette.themeGray}", 1, 3 ]  },
         "badge"  : { "@zebkit.draw.Border" : [ "#999999", 1, 10 ]  },
-        "curved"  : { "@zebkit.draw.Border" : [ "#C5C5C5", 1, 9 ]  },
-        "curvedsmall"  : { "@zebkit.draw.Border" : [ "#C5C5C5", 1, 6 ]  },
+        "curved"  : { "@zebkit.draw.Border" : [ "%{palette.themeGray}", 1, 9 ]  },
+        "curvedsmall"  : { "@zebkit.draw.Border" : [ "%{palette.themeGray}", 1, 6 ]  },
         "dot"    : { "@zebkit.draw.Dotted" : []  }
     },
 
@@ -98,7 +99,7 @@
 
         "border": {
             "focuson"  : { "@zebkit.draw.Border" : [ "%{palette.highlightColor}", 2, 2 ] },
-            "focusoff" : { "@zebkit.draw.Border" : [ "#C5C5C5", 1, 2 ] }
+            "focusoff" : { "@zebkit.draw.Border" : [ "%{palette.themeGray}", 1, 2 ] }
         },
 
         "focusMarkerView" : null,
@@ -146,7 +147,7 @@
 
         "border": {
             "focuson"  : { "@zebkit.draw.Border" : [ "%{palette.highlightColor}", 2, 2 ] },
-            "focusoff" : { "@zebkit.draw.Border" : [ "#C5C5C5", 1, 2 ] }
+            "focusoff" : { "@zebkit.draw.Border" : [ "%{palette.themeGray}", 1, 2 ] }
         },
 
         "focusMarkerView" : null,
@@ -186,7 +187,7 @@
 
         "border": {
             "focuson"  : { "@zebkit.draw.Border" : [ "rgba(5, 5, 5, 0.6)", 2, 2 ] },
-            "focusoff" : { "@zebkit.draw.Border" : [ "#C5C5C5", 1, 2 ] }
+            "focusoff" : { "@zebkit.draw.Border" : [ "%{palette.themeGray}", 1, 2 ] }
         },
 
         "focusMarkerView" : null,
@@ -804,5 +805,14 @@
 
     "DecoratorLabel" : {
         "selectionColor" : "%{palette.overColor}"
+    },
+
+    "TextEditorControls" : {
+        "rowBackgroundColor"      : "rgba(240,240,240,1)",
+        "buttonFocusColor"        : "%{palette.highlightColor}",
+        "buttonSelectedColor"     : "green",
+        "buttonBackColor"         : "%{palette.themeGray}",
+        "historyButtonBackColor"  : "rgba(133,133,133,1)",
+        "tipTextColor"            : "%{palette.mainColor}"
     }
 }
