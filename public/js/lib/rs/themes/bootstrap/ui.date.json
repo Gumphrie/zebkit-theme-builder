@@ -1,13 +1,13 @@
 {
 
     "WEEKS" : [
-        { "name" : "Sunday",    "nickname" : "Sun", "isWeekend": true, "color": "red" },
-        { "name" : "Monday",    "nickname" : "Mon" },
-        { "name" : "Tuesday",   "nickname" : "Tue" },
-        { "name" : "Wednesday", "nickname" : "Wed" },
-        { "name" : "Thursday",  "nickname" : "Thu" },
-        { "name" : "Friday",    "nickname" : "Fri" },
-        { "name" : "Saturday",  "nickname" : "Sat", "isWeekend": true, "color": "red" }
+        { "name" : "Sunday",    "nickname" : "Su", "isWeekend": true, "color": "red" },
+        { "name" : "Monday",    "nickname" : "Mo" },
+        { "name" : "Tuesday",   "nickname" : "Tu" },
+        { "name" : "Wednesday", "nickname" : "We" },
+        { "name" : "Thursday",  "nickname" : "Th" },
+        { "name" : "Friday",    "nickname" : "Fr" },
+        { "name" : "Saturday",  "nickname" : "Sa", "isWeekend": true, "color": "red" }
     ],
 
     "MONTHS" : [
@@ -45,8 +45,8 @@
             "flowLayout" : [ "right", "center", "horizontal", 2 ],
 
             "Label" : {
-                "color" : "#442244",
-                "font"  : { "@zebkit.Font" : [ "Arial", "bold", "14" ] },
+                "color" : "%{zebkit.ui.palette.fontColor}",
+                "font"  : { "@zebkit.Font" : [ "Arial", "bold", "13" ] },
                 "border":  null,
                 "background": null,
                 "padding" : 0,
@@ -63,7 +63,7 @@
 
             "border": null,
             "background": null,
-            "preferredSize" : [32, -1]
+            "preferredSize" : [24, -1]
         },
 
         "tagsDecoration" : {
@@ -78,14 +78,14 @@
             "today" : {
                 "icon/" :  {
                     "view"          : null,
-                    "border"        : { "@zebkit.draw.RoundBorder" : []},
-                    "background"    : "#65B661",
+                    "border"        : { "@zebkit.draw.RoundBorder" : ["rdba(0,0,0,0.0)",1]},
+                    "background"    : "%{zebkit.ui.palette.mainColor}",
                     "preferredSize" : [ 8, 8 ]
                 }
             },
 
             "notSelectable" : {
-                "color": "gray",
+                "color": "%{zebkit.ui.palette.themeGray}",
                 "textDecorations" : "strike",
                 "textDecorationsColor" : "red"
             }
@@ -98,22 +98,22 @@
         "lineColor"         : "lightGray",
         "defCellAlignments" : [ "right", "center" ],
         "views": {
-            "offmarker"           : "rgba(234, 243, 119, 0.5)",
-            "marker"              : "rgba(234, 243, 119, 1.0)",
+            "offmarker"           : "%{zebkit.ui.palette.highlightColor}",
+            "marker"              : "%{zebkit.ui.palette.selectColor}",
             "notSelectableMarker" : { "@zebkit.draw.Border": "lightGray" }
         }
     },
 
     "Calendar" : {
         "LeftArrowButton" : {
-            "arrowSize" : [14, 14],
+            "arrowSize" : [12, 12],
             "padding"  : 0,
             "id"       : "leftButton",
             "direction" : "left"
         },
 
         "RightArrowButton" : {
-            "arrowSize" : [14, 14],
+            "arrowSize" : [12, 12],
             "padding"  : 0,
             "id"       : "rightButton",
             "direction" : "right"
@@ -123,14 +123,14 @@
             "id"             : "topButton",
             "direction" : "top",
             "padding"  : 0,
-            "arrowSize"  : [ 16, 10 ]
+            "arrowSize"  : [ 14, 10 ]
         },
 
         "BottomArrowButton" : {
             "id"            : "bottomButton",
             "padding"  : 0,
             "direction": "bottom",
-            "arrowSize"  : [ 16, 10 ]
+            "arrowSize"  : [ 14, 10 ]
         },
 
         "Link" : {
@@ -142,7 +142,7 @@
         "DotButton" : {
             "id"         : "dotButton",
             "enabled"    : false,
-            "border"     : { "@zebkit.draw.RoundBorder" : [ null, 0] },
+            "border"     : { "@zebkit.draw.RoundBorder" : [ "%{zebkit.ui.palette.overColor}", 1] },
             "background" : {
                 "out"          : "black",
                 "over"         : "red",
@@ -154,14 +154,16 @@
 
         "MonthsCombo" : {
             "Label": {
-                "font" : { "@zebkit.Font" : [ "Arial", "bold", "14" ] },
+                "font" : { "@zebkit.Font" : [ "Arial", "bold", "13" ] },
                 "padding" : 4,
+                "color" : "%{zebkit.ui.palette.mainColor}",
                 "inheritProperties" : true
             },
 
             "CompList" : {
                 "border" : null,
-                "padding": 2
+                "padding": 2,
+                "color": "black"
             },
 
             "id"     : "monthsCombo",
@@ -173,30 +175,30 @@
 
             "border" : {
                 "focusoff" :  null,
-                "focuson"  : { "@zebkit.draw.LineView" : [ "bottom", "black", 1 ] }
+                "focuson"  : null
             }
         },
 
         "YearField" : {
             "id"    : "yearField",
-            "font" : { "@zebkit.Font" : [ "Arial", "bold", "14" ] },
+            "font" : { "@zebkit.Font" : [ "Arial", "bold", "13" ] },
             "editable"   : false,
             "background" : null,
             "cursorView" : null,
-            "color" : "#276733",
+            "color" : "%{zebkit.ui.palette.mainColor}",
             "border" : {
                 "focusoff" :  null,
-                "focuson"  : { "@zebkit.draw.LineView" : [ "bottom", "black", 1 ] }
+                "focuson"  : null
             }
         },
 
         "InfoPan" : {
-            "background": "#C0F785",
+            "background": "%{zebkit.ui.palette.overColor}",
             "padding" : [2, 8, 2, 8]
         },
 
         "border": "plain",
-        "background" : "#ECFFE6"
+        "background" : "%{zebkit.ui.palette.themeBack}"
     },
 
     "DateTextField" : {
@@ -250,13 +252,13 @@
         "LeftArrowButton" : {
             "direction": "left",
             "padding" : 0,
-            "arrowSize"  : [ 10, 14 ]
+            "arrowSize"  : [ 10, 12 ]
         },
 
         "RightArrowButton" : {
             "direction" : "right",
             "padding" : 0,
-            "arrowSize"  : [ 10, 14 ]
+            "arrowSize"  : [ 10, 12 ]
         },
 
         "Line" : {

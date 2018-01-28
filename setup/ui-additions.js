@@ -3360,4 +3360,24 @@ zebkit.package("ui", function(pkg, Class) {
         }
     ]);
 
+    pkg.EditableTimeCombo = function(timeStr)
+    {
+        var autoTimes=[];
+        for (var i=0; i < 24; i++) autoTimes.push((i<10?'0':'')+i+':00:00.0');
+
+        var timeCombo = new pkg.Combo(autoTimes,true);
+        timeCombo.setPreferredSize(120, 30);
+        timeCombo.list.parent.setPreferredSize(-1,150);
+        timeCombo.on(function(combo, value)
+        {
+            timeCombo.requestFocus();
+            timeCombo.kids[0].kids[0].select(0,0);
+            timeCombo.kids[0].dontGenerateUpdateEvent=true;
+        });
+        timeCombo.kids[0].dontGenerateUpdateEvent=true;
+        timeCombo.kids[0].textField.setValue(timeStr);
+
+        return timeCombo;
+    }
+
 });

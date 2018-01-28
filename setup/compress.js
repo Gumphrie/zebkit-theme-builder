@@ -48,6 +48,7 @@ module.exports = function() {
                 }
 
                 fs.copySync(__dirname + '/../zebkit/build/zebkit.js', __dirname + '/../public/js/lib/zebkit.js');
+                fs.copySync(__dirname + '/../zebkit/build/ui.date.js', __dirname + '/../public/js/lib/ui.date.js');
                 fs.removeSync(__dirname + '/../zebkit/build');
 
                 // build zebkit.min.js minified and bundled with ZFS theme
@@ -60,6 +61,7 @@ module.exports = function() {
                     }
 
                     fs.copySync(__dirname + '/../zebkit/build/zebkit.min.js', __dirname + '/../public/js/lib/zebkit.min.js');
+                    fs.copySync(__dirname + '/../zebkit/build/ui.date.min.js', __dirname + '/../public/js/lib/ui.date.min.js');
                     fs.removeSync(__dirname + '/../zebkit');
                     console.log("zebkit bundled with theme - patch complete");
                 });

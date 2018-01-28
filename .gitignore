@@ -8,6 +8,8 @@ zebkit
 ##############################
 public/js/lib/zebkit.js
 public/js/lib/zebkit.min.js
+public/js/lib/ui.date.js
+public/js/lib/ui.date.min.js
 
 
 # Don't track project files

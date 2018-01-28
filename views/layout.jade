@@ -11,8 +11,10 @@ html
         link(rel='stylesheet', href='/css/style.css')
         if (env==='dev')
             script(type='text/javascript', src="/js/lib/zebkit.js")
+            script(type='text/javascript', src="/js/lib/ui.date.js")
         else
             script(type='text/javascript', src="/js/lib/zebkit.min.js")
+            script(type='text/javascript', src="/js/lib/ui.date.min.js")
         script(type='text/javascript', src='/js/uidemo/uidemo.js')
 
     body(style="background:black")
