@@ -463,7 +463,7 @@ zebkit.package("ui.demo", function(pkg, Class) {
                     "text": " to undo your changes. \n\n"
                 },
                 {
-                    "text": "Click the links below for more information...",
+                    "text": "Check out the Zebkit website for more information...",
                     "bold": true
                 },
                 {

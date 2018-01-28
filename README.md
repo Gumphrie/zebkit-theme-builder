@@ -8,7 +8,9 @@ Outputs a UI demo of most Zebkit UI components (and some bonus custom ones!). Th
 Theme files are located at `/public/js/lib/rs/themes`. By default there is one custom theme called `bootstrap`, you can either customize this theme or make a new theme by creating another folder at the same location.
 The name of the theme the builder and demo will use is defined in `config.js` at the root of the project.
 
-The repo includes custom UI components and draw methods which are made available as part of the core zebkit.ui and zebkit.draw packages, if you wish to edit these, they are the `setup/ui-additions.js` and `setup/draw-additions.js` files repectively.
+![TextEditor](texteditor.png)
+
+The repo includes custom UI components (including the Zebkit text editor) and draw methods which are made available as part of the core zebkit.ui and zebkit.draw packages, if you wish to edit these, they are the `setup/ui-additions.js` and `setup/draw-additions.js` files repectively.
 
 At startup, the project will fetch the current zebkit repo, patch the repo's gulpfile to include the custom components, and then output to `public/js/lib` two library files, `zebkit.js` and `zebkit.min.js` format. The minified file also contains all the theme files compressed and bundled using ZFS, the unminified file does not.
 
@@ -54,3 +56,4 @@ Make sure you copy across the zebkit.min.js and then before you require zebkit a
     );        
 ```
 
+If you wish to make use of the calender or virtual keyboard components in your project also make sure to copy over the ui.date.min.js and ui.vk.min.js files respectively.  
